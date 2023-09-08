@@ -32,7 +32,7 @@ else
 fi >&2
 
 # Create build image
-docker build -t "${APPNAME,,}-builder" "${BUILD_ARGS[@]}" .
+docker build --no-cache -t "${APPNAME,,}-builder" "${BUILD_ARGS[@]}" .
 echo
 
 # Build APK

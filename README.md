@@ -16,3 +16,11 @@ vi config
 # build APK and save it to ./apk
 ./build.sh
 ```
+
+## Update
+
+Make sure to keep the generated `apk/infinity.jks` file from the first build, when creating a new version. Otherwise all user-data gets lost, when installing the new APK.
+
+```bash
+./build.sh
+```
