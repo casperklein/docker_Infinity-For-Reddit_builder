@@ -1,0 +1,20 @@
+--- build.gradle.old	2023-07-02 02:10:38.000000000 +0200
++++ build.gradle	2023-07-02 02:10:39.000000000 +0200
+@@ -17,8 +17,17 @@
+             }
+         }
+     }
++    signingConfigs {
++        release {
++            storeFile file("/infinity.jks")
++            storePassword "Infinity"
++            keyAlias "Infinity"
++            keyPassword "Infinity"
++        }
++    }
+     buildTypes {
+         release {
++            signingConfig signingConfigs.release
+             minifyEnabled false
+             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+         }

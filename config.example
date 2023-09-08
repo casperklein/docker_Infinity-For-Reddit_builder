@@ -1,0 +1,7 @@
+API_APP_NAME="my-new-app-name"
+API_APP_VERSION="0.0.1"
+API_KEY="top-secret-api-key"
+API_USER="Old-Pepper-1234"
+
+APPNAME="my-new-app-name"
+PACKAGENAME="foo.example.mynewappname"

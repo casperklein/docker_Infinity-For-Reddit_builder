@@ -1,0 +1,3 @@
+*
+!rootfs/build.gradle.patch
+!rootfs/run.sh
