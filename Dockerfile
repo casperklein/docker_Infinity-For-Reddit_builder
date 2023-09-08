@@ -4,7 +4,7 @@ FROM	debian:11-slim as base
 
 ARG	GITHUB_USER="Docile-Alligator"
 ARG	GITHUB_REPO="Infinity-For-Reddit"
-ARG	GITHUB_COMMIT="v6.1.1"
+ARG	GITHUB_COMMIT="master"
 ARG	GITHUB_ARCHIVE="https://github.com/$GITHUB_USER/$GITHUB_REPO/archive/$GITHUB_COMMIT.tar.gz"
 
 ARG	API_APP_NAME
