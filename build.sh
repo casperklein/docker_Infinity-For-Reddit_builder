@@ -31,7 +31,7 @@ else
 	exit 1
 fi >&2
 
-# Create build image
+# Create builder image
 docker build --no-cache -t "${APPNAME,,}-builder" "${BUILD_ARGS[@]}" .
 echo
 
