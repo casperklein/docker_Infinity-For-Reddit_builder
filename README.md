@@ -1,6 +1,6 @@
 # docker_Infinity-For-Reddit_builder
 
-Create a custom Infinity-For-Reddit client, using your own Reddit API key.
+Create a custom [Infinity-For-Reddit](https://github.com/Docile-Alligator/Infinity-For-Reddit) client, using your own Reddit API key.
 
 ## Create Reddit App And API Key
 

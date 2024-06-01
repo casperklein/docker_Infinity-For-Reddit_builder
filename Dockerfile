@@ -1,11 +1,11 @@
 # Heavily inspired from: https://www.reddit.com/r/Infinity_For_Reddit/comments/14c2v5x/build_your_own_apk_with_your_personal_api_key_in/
 
-FROM	debian:11-slim as base
+FROM	debian:12-slim as base
 
 ARG	GITHUB_USER="Docile-Alligator"
 ARG	GITHUB_REPO="Infinity-For-Reddit"
-ARG	GITHUB_COMMIT="master"
-ARG	GITHUB_ARCHIVE="https://github.com/$GITHUB_USER/$GITHUB_REPO/archive/$GITHUB_COMMIT.tar.gz"
+# ARG	GITHUB_COMMIT="master"
+# ARG	GITHUB_ARCHIVE="https://github.com/$GITHUB_USER/$GITHUB_REPO/archive/$GITHUB_COMMIT.tar.gz"
 
 ARG	API_APP_NAME
 ARG	API_APP_VERSION
@@ -34,8 +34,8 @@ RUN     [ -z "$PACKAGENAME" ] && echo "Error: Build argument 'PACKAGENAME' is mi
 
 SHELL	["/bin/bash", "-c"]
 
-ARG	PACKAGES="coreutils openjdk-11-jdk patch unzip wget"
-# ARG	PACKAGES="coreutils openjdk-17-jdk patch unzip wget" # debian 12 --> does not build
+# ARG	PACKAGES="coreutils openjdk-11-jdk patch unzip wget" # debian 11
+ARG	PACKAGES="coreutils openjdk-17-jdk patch unzip wget curl jq" # debian 12
 
 ARG	DEBIAN_FRONTEND=noninteractive
 RUN	apt-get update \
@@ -46,8 +46,8 @@ RUN	apt-get update \
 # Get SDK #########################################################################################
 FROM	base as sdk
 
-# https://developer.android.com/studio (scroll down to "Command line tools only" to get the latest version)
-ENV	SDK_URL="https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip"
+#?	https://developer.android.com/studio (scroll down to "Command line tools only" to get the latest version)
+ENV	SDK_URL="https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip"
 RUN	wget -O android-sdk.zip $SDK_URL \
 &&	unzip -q android-sdk.zip -d android-sdk
 
@@ -62,7 +62,12 @@ RUN	wget -O /bin/sedfile https://raw.githubusercontent.com/casperklein/bash-pack
 
 # Get source
 WORKDIR	/$GITHUB_REPO
-RUN	wget -O - "$GITHUB_ARCHIVE" | tar --strip-component 1 -xzv
+# RUN	wget -O - "$GITHUB_ARCHIVE" | tar --strip-component 1 -xzv
+RUN	GITHUB_COMMIT=$(curl -sf "https://api.github.com/repos/$GITHUB_USER/$GITHUB_REPO/releases/latest" | jq -r '.name') \
+#! 	building from tags does not work. many files differ from master and build fails
+&&	GITHUB_COMMIT=master \
+&&	GITHUB_ARCHIVE="https://github.com/$GITHUB_USER/$GITHUB_REPO/archive/$GITHUB_COMMIT.tar.gz" \
+&&	wget -O - "$GITHUB_ARCHIVE" | tar --strip-component 1 -xzv
 
 # Change API token, redirect URI and user-agent
 ENV	APIUTILS_FILE="/Infinity-For-Reddit/app/src/main/java/ml/docilealligator/infinityforreddit/utils/APIUtils.java"
