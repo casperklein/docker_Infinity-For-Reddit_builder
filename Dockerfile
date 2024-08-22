@@ -4,8 +4,10 @@ FROM	debian:12-slim AS base
 
 ARG	GITHUB_USER="Docile-Alligator"
 ARG	GITHUB_REPO="Infinity-For-Reddit"
-# ARG	GITHUB_COMMIT="master"
-# ARG	GITHUB_ARCHIVE="https://github.com/$GITHUB_USER/$GITHUB_REPO/archive/$GITHUB_COMMIT.tar.gz"
+ARG	GITHUB_COMMIT="master"
+ARG	GITHUB_ARCHIVE="https://github.com/$GITHUB_USER/$GITHUB_REPO/archive/$GITHUB_COMMIT.tar.gz"
+
+RUN	echo "Building $GITHUB_REPO: $GITHUB_COMMIT"
 
 ARG	API_APP_NAME
 ARG	API_APP_VERSION
@@ -62,12 +64,7 @@ RUN	wget -O /bin/sedfile https://raw.githubusercontent.com/casperklein/bash-pack
 
 # Get source
 WORKDIR	/$GITHUB_REPO
-# RUN	wget -O - "$GITHUB_ARCHIVE" | tar --strip-component 1 -xzv
-RUN	GITHUB_COMMIT=$(curl -sf "https://api.github.com/repos/$GITHUB_USER/$GITHUB_REPO/releases/latest" | jq -r '.name') \
-#! 	building from tags does not work. many files differ from master and build fails
-&&	GITHUB_COMMIT=master \
-&&	GITHUB_ARCHIVE="https://github.com/$GITHUB_USER/$GITHUB_REPO/archive/$GITHUB_COMMIT.tar.gz" \
-&&	wget -O - "$GITHUB_ARCHIVE" | tar --strip-component 1 -xzv
+RUN	wget -O - "$GITHUB_ARCHIVE" | tar --strip-component 1 -xzv
 
 # Change API token, redirect URI and user-agent
 ENV	APIUTILS_FILE="/Infinity-For-Reddit/app/src/main/java/ml/docilealligator/infinityforreddit/utils/APIUtils.java"

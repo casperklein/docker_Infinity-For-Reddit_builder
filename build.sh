@@ -1,7 +1,19 @@
 #!/bin/bash
 
-set -e
+set -euo pipefail
 shopt -s inherit_errexit
+
+checkBinarys() {
+        local i
+        for i in "$@"; do
+                hash "$i" 2>/dev/null || {
+                        echo "Binary missing: $i"
+                        echo
+                        exit 1
+                } >&2
+        done
+}
+checkBinarys "curl" "dirname" "docker" "readlink"  #"jq"
 
 BASE=$(dirname "$(readlink -f "$0")")
 cd "$BASE"
@@ -31,8 +43,24 @@ else
 	exit 1
 fi >&2
 
+if [ -z "${1:-}" ]; then
+	LATEST=$(curl -sLf https://api.github.com/repos/Docile-Alligator/Infinity-For-Reddit/releases/latest | jq -r '.name' 2>/dev/null || echo "master")
+	[ "$LATEST" == "master" ] && echo "Error: Latest version/tag could not be determined."
+
+	read -r -p "Enter the commit/tag you want Infinity-For-Reddit to build from [$LATEST]: " GITHUB_COMMIT
+	echo
+
+	[ -z "$GITHUB_COMMIT" ] && GITHUB_COMMIT=$LATEST
+else
+	GITHUB_COMMIT=$1
+fi
+export GITHUB_COMMIT
+BUILD_ARGS+=("--build-arg" "GITHUB_COMMIT")
+echo "Building Infinity-For-Reddit: $GITHUB_COMMIT"
+echo
+
 # Create builder image
-docker build --no-cache -t "${APPNAME,,}-builder" "${BUILD_ARGS[@]}" .
+docker build -t "${APPNAME,,}-builder" "${BUILD_ARGS[@]}" .
 echo
 
 # Build APK
