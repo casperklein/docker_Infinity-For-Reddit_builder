@@ -1,6 +1,6 @@
 # Heavily inspired from: https://www.reddit.com/r/Infinity_For_Reddit/comments/14c2v5x/build_your_own_apk_with_your_personal_api_key_in/
 
-FROM	debian:12-slim as base
+FROM	debian:12-slim AS base
 
 ARG	GITHUB_USER="Docile-Alligator"
 ARG	GITHUB_REPO="Infinity-For-Reddit"
@@ -44,7 +44,7 @@ RUN	apt-get update \
 &&	rm -rf /var/lib/apt/lists/*
 
 # Get SDK #########################################################################################
-FROM	base as sdk
+FROM	base AS sdk
 
 #?	https://developer.android.com/studio (scroll down to "Command line tools only" to get the latest version)
 ENV	SDK_URL="https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip"
