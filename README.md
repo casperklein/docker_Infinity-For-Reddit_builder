@@ -14,16 +14,16 @@ Create a custom [Infinity-For-Reddit](https://github.com/Docile-Alligator/Infini
 ## Usage
 
 ```bash
-# clone repo
+# Clone repo
 git clone https://github.com/casperklein/docker_Infinity-For-Reddit_builder infinity-builder
 cd infinity-builder
 
-# configure APPNAME, API_KEY etc.
+# Configure APPNAME, API_KEY etc.
 cp config.example config
 vi config
 
-# build APK and save it to ./apk
-./build.sh [<commit/tag>]
+# Build APK and save it to ./apk
+./build.sh [commit/tag]
 ```
 
 ## Update
