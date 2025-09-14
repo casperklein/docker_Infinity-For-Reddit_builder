@@ -31,5 +31,5 @@ vi config
 Make sure to keep the generated `apk/infinity.jks` file from the first build, when creating a new version. Otherwise you won't be able to update your app.
 
 ```bash
-./build.sh [<commit/tag>]
+./build.sh [commit/tag]
 ```
