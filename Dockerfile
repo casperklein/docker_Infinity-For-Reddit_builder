@@ -48,7 +48,7 @@ RUN	apt-get update \
 FROM	base AS sdk
 
 #?	https://developer.android.com/studio (scroll down to "Command line tools only" to get the latest version)
-ENV	SDK_URL="https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip"
+ENV	SDK_URL="https://dl.google.com/android/repository/commandlinetools-linux-13114758_latest.zip"
 RUN	wget -O android-sdk.zip $SDK_URL \
 &&	unzip -q android-sdk.zip -d android-sdk
 
