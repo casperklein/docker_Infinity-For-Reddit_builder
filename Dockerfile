@@ -1,6 +1,6 @@
 # Heavily inspired from: https://www.reddit.com/r/Infinity_For_Reddit/comments/14c2v5x/build_your_own_apk_with_your_personal_api_key_in/
 
-FROM	debian:12-slim AS base
+FROM	debian:13-slim AS base
 
 ARG	GITHUB_USER="Docile-Alligator"
 ARG	GITHUB_REPO="Infinity-For-Reddit"
@@ -36,8 +36,7 @@ RUN     [ -z "$PACKAGENAME" ] && echo "Error: Build argument 'PACKAGENAME' is mi
 
 SHELL	["/bin/bash", "-c"]
 
-# ARG	PACKAGES="coreutils openjdk-11-jdk patch unzip wget" # debian 11
-ARG	PACKAGES="coreutils openjdk-17-jdk patch unzip wget curl jq" # debian 12
+ARG	PACKAGES="coreutils openjdk-21-jdk patch unzip wget curl jq"
 
 ARG	DEBIAN_FRONTEND=noninteractive
 RUN	apt-get update \
