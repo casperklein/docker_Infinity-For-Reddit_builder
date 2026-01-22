@@ -52,7 +52,9 @@ ENV	SDK_URL="https://dl.google.com/android/repository/commandlinetools-linux-131
 RUN	wget -O android-sdk.zip $SDK_URL \
 &&	unzip -q android-sdk.zip -d android-sdk
 
-RUN	yes | $ANDROID_SDK_ROOT/cmdline-tools/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platforms;android-30" "build-tools;30.0.3"
+# https://developer.android.com/tools/releases/platforms
+# https://developer.android.com/tools/releases/build-tools
+RUN	yes | $ANDROID_SDK_ROOT/cmdline-tools/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platforms;android-36" "build-tools;36.0.0"
 
 # Prepare build ##################################################################################
 FROM	base
